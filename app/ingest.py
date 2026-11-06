@@ -1,7 +1,7 @@
 """PDF -> pages -> chunks (every chunk remembers its page number)."""
 from pypdf import PdfReader
 
-
+#C:\Users\USER\Downloads\testpdf.pdf
 def extract_pages(path: str) -> list[dict]:
     """Return [{"page": 1, "text": "..."}, ...]. Pages with no text are skipped."""
     reader = PdfReader(path)
@@ -26,3 +26,7 @@ def chunk_pages(pages: list[dict], chunk_size: int = 800, overlap: int = 150) ->
                 chunks.append({"text": piece, "page": p["page"]})
             start += chunk_size - overlap
     return chunks
+
+
+
+

@@ -5,6 +5,7 @@ pypdf
 chromadb
 sentence-transformers
 anthropic
+openai
 streamlit
 requests
 python-dotenv

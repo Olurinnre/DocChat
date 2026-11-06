@@ -1,4 +1,4 @@
-"""Retrieval + prompt design + Claude call."""
+"""Retrieval + prompt design + Gemini call."""
 from dotenv import load_dotenv
 #import anthropic
 import os
