@@ -1,13 +1,19 @@
 """Retrieval + prompt design + Claude call."""
 from dotenv import load_dotenv
-import anthropic
+#import anthropic
+import os
+from openai import OpenAI
+
 
 from .store import search
 
 load_dotenv()
-llm = anthropic.Anthropic()  # reads ANTHROPIC_API_KEY from the environment
+#llm = anthropic.Anthropic()  # reads ANTHROPIC_API_KEY from the environment
+#MODEL = "claude-sonnet-5-5"
 
-MODEL = "claude-sonnet-5-5"
+
+llm = OpenAI(base_url=os.getenv("LLM_BASE_URL"), api_key=os.getenv("LLM_API_KEY"))
+MODEL = os.getenv("LLM_MODEL")
 
 SYSTEM = """You answer questions using ONLY the numbered sources provided.
 - Cite sources inline like [1], [2] right after each claim they support.
@@ -35,5 +41,11 @@ def answer(question: str, doc_id: str | None = None, k: int = 5, history: list[d
             "content": f"Sources:\n{build_context(hits)}\n\nQuestion: {question}",
         }
     )
-    msg = llm.messages.create(model=MODEL, max_tokens=1000, system=SYSTEM, messages=messages)
-    return {"answer": msg.content[0].text, "sources": hits}
+    #msg = llm.messages.create(model=MODEL, max_tokens=1000, system=SYSTEM, messages=messages)
+    #return {"answer": msg.content[0].text, "sources": hits}
+    resp = llm.chat.completions.create(
+    model=MODEL,
+    max_tokens=1000,
+    messages=[{"role": "system", "content": SYSTEM}, *messages],
+    )
+    return {"answer": resp.choices[0].message.content, "sources": hits}
