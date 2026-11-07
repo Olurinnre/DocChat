@@ -51,8 +51,10 @@ async def upload(file: UploadFile = File(...)):
 def ask(q: Question):
     if not q.question.strip():
         raise HTTPException(400, "Question is empty.")
-    return answer(q.question, doc_id=q.doc_id, k=q.k)
-
+    try:
+        return answer(q.question, doc_id=q.doc_id, k=q.k)
+    except Exception as e:
+        raise HTTPException(502, f"LLM call failed: {e}")
 
 @app.get("/documents")
 def documents():
