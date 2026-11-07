@@ -1,13 +1,15 @@
-"""Retrieval + prompt design + Gemini call."""
-from dotenv import load_dotenv
+"""Retrieval, prompt design, and OpenAI-compatible LLM calls."""
 #import anthropic
 import os
+from pathlib import Path
+
+from dotenv import load_dotenv
 from openai import OpenAI
 
 
 from .store import search
 
-load_dotenv()
+load_dotenv(Path(__file__).resolve().parents[1] / ".env")
 #llm = anthropic.Anthropic()  # reads ANTHROPIC_API_KEY from the environment
 #MODEL = "claude-sonnet-5-5"
 
