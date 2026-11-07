@@ -4,8 +4,7 @@ python-multipart
 pypdf
 chromadb
 sentence-transformers
-anthropic
-openai
+groq
 streamlit
 requests
 python-dotenv

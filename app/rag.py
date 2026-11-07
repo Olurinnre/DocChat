@@ -1,20 +1,15 @@
-"""Retrieval, prompt design, and OpenAI-compatible LLM calls."""
-#import anthropic
+"""Retrieval, prompt design, and Groq LLM calls."""
 import os
 from pathlib import Path
 
 from dotenv import load_dotenv
-from openai import OpenAI
+from groq import Groq
 
 
 from .store import search
 
 load_dotenv(Path(__file__).resolve().parents[1] / ".env")
-#llm = anthropic.Anthropic()  # reads ANTHROPIC_API_KEY from the environment
-#MODEL = "claude-sonnet-5-5"
-
-
-llm = OpenAI(base_url=os.getenv("LLM_BASE_URL"), api_key=os.getenv("LLM_API_KEY"))
+llm = Groq(api_key=os.getenv("LLM_API_KEY"))
 MODEL = os.getenv("LLM_MODEL")
 
 SYSTEM = """You answer questions using ONLY the numbered sources provided.

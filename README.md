@@ -15,19 +15,25 @@ flowchart LR
   G --> E
   E --> H[Top-k chunks]
   H --> I[Prompt with numbered sources]
-  I --> J[Claude API]
+  I --> J[Groq API]
   J --> K[Answer + page citations]
 ```
 
 ## Stack
-FastAPI · pypdf · sentence-transformers (`BAAI/bge-small-en-v1.5`) · ChromaDB · Claude API · Streamlit
+FastAPI · pypdf · sentence-transformers (`BAAI/bge-small-en-v1.5`) · ChromaDB · Groq (`llama-3.1-8b-instant`) · Streamlit
 
 ## Setup
 ```bash
 git clone https://github.com/YOUR_USERNAME/rag-chat-docs.git && cd rag-chat-docs
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env     # then add your ANTHROPIC_API_KEY
+```
+
+Create a `.env` file in the project root with your Groq API key:
+```dotenv
+LLM_BASE_URL=https://api.groq.com/openai/v1
+LLM_API_KEY=your_groq_api_key
+LLM_MODEL=llama-3.1-8b-instant
 ```
 
 ## Run

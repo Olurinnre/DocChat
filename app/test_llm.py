@@ -1,14 +1,16 @@
-from dotenv import load_dotenv
-load_dotenv()
 import os
-import openai
+from pathlib import Path
 
-c = openai.OpenAI(base_url=os.getenv("LLM_BASE_URL"), api_key=os.getenv("LLM_API_KEY"))
+import groq
+from dotenv import load_dotenv
+
+load_dotenv(Path(__file__).resolve().parents[1] / ".env")
+c = groq.Groq(api_key=os.getenv("LLM_API_KEY"))
 try:
     r = c.chat.completions.create(
         model=os.getenv("LLM_MODEL"),
         messages=[{"role": "user", "content": "Say hi"}],
     )
     print(r.choices[0].message.content)
-except openai.APIStatusError as e:
+except groq.APIStatusError as e:
     print(e.status_code, e.response.text)
